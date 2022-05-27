@@ -4,12 +4,20 @@ import { FeedbackOptions } from 'components/FeedbackOptions/FeedbackOptions';
 import { Notification } from './components/Notification/Notification';
 import { Statistics } from 'components/Statistics/Statistics';
 
-export function App() {
-    const [good, setGood] = useState(0);
+export const App = () => {
+    const [options, setOptions] = useState({
+        good: 0, neutral: 0, bad: 0
+    });
+
+    const handleFeedbackChange = key => {
+        setOptions(options => ({ ...options, [key]: options[key] + 1 }));
+    };
+
+    /*const [good, setGood] = useState(0);
     const [neutral, setNeutral] = useState(0);
     const [bad, setBad] = useState(0);
 
-    const handleFeedbackChange = feedback => {
+    /*const handleFeedbackChange = feedback => {
         switch (feedback) {
             case 'good':
                 setGood(prevState => prevState + 1);
@@ -26,33 +34,33 @@ export function App() {
             default:
                 break;
         }
-    };
+    };*/
 
     const countTotalFeedback = () => {
-        return good + neutral + bad;
+        return options.good + options.neutral + options.bad;
     };
 
     const countPositiveFeedbackPercentage = () => {
         const total = countTotalFeedback();
-        return Math.round((good * 100) / total);
+        return Math.round((options.good * 100) / total);
     };
 
-    const feedbacks = ['good', 'neutral', 'bad']; 
+    const keys = ['good', 'neutral', 'bad']; 
 
     return (
         <>
             <Section title="Please leave feedback">
                 <FeedbackOptions
-                    options={feedbacks}
+                    options={keys}
                     onBtnClick={handleFeedbackChange}
                 />
             </Section>
             <Section title="Statistics">
                 {countTotalFeedback() > 0 ? (
                     <Statistics
-                        good={good}
-                        neutral={neutral}
-                        bad={bad}
+                        good={options.good}
+                        neutral={options.neutral}
+                        bad={options.bad}
                         total={countTotalFeedback()}
                         positivePercentage={countPositiveFeedbackPercentage()}
                     />
