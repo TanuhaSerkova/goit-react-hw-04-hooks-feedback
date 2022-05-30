@@ -17,7 +17,7 @@ export const App = () => {
     const [neutral, setNeutral] = useState(0);
     const [bad, setBad] = useState(0);
 
-    /*const handleFeedbackChange = feedback => {
+    const handleFeedbackChange = feedback => {
         switch (feedback) {
             case 'good':
                 setGood(prevState => prevState + 1);
@@ -45,7 +45,7 @@ export const App = () => {
         return Math.round((options.good * 100) / total);
     };
 
-    const keys = ['good', 'neutral', 'bad']; 
+    const keys = Object.keys(options); 
 
     return (
         <>
